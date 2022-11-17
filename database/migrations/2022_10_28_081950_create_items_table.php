@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignIdFor(\App\Models\ItemCategory::class, 'category_id')->constrained();
+            $table->foreignIdFor(\App\Models\ItemCategory::class, 'category_id')->constrained('item_categories');
             $table->string('commodity_type');
             $table->string('details');
         });
