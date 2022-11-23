@@ -120,10 +120,10 @@ class FundSourceController extends Controller
         try {
             DB::beginTransaction();
 
-            // TODO: Check WFP binding
-            $fund_source = FundSource::find($id);
+            $fund_source = FundSource::withCount('wfps')->find($id);
             
             if ($fund_source === null) return response()->json('Fund source not found.', 404);
+            if ($fund_source->wfps_count > 0) return response()->json('Unable to delete fund sources with linked WFPs.', 409);
             
             $fund_source->delete();
             DB::commit();
